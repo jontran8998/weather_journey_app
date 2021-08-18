@@ -17,9 +17,14 @@ app.use(express.static('website'));
 
 const port = 3000;
 
+// Set up route
+app.get('/getData', (req, res) => {
+  res.send('hi world')
+})
+
+
+
 // Spin up the server
-const server = app.listen(port, listening);
-function listening(){
-    // console.log(server);
-    console.log(`running on localhost: ${port}`);
-};
+const server = app.listen(port, () => {
+  console.log(`server running on local host: ${port}`);
+})
