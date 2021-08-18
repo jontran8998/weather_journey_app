@@ -17,9 +17,12 @@ app.use(express.static('website'));
 
 const port = 3000;
 
+// create projectData object
+const projectData = {name: 'Jon Tran', age: 24};
+
 // Set up route
-app.get('/getData', (req, res) => {
-  res.send('hi world')
+app.get('/data', (req, res) => {
+  res.send(projectData)
 })
 
 
