@@ -18,14 +18,22 @@ app.use(express.static('website'));
 const port = 3000;
 
 // create projectData object
-const projectData = {name: 'Jon Tran', age: 24};
+const projectData = [{temperature: 18, date: 'Aug 18', userResponse: "That's great!"}];
 
-// Set up route
+// Set up GET route
 app.get('/data', (req, res) => {
   res.send(projectData)
 })
 
+// Set up POST route
+app.post('/addData', (req, res) => {
+  // add data from request.body to array projectData
+  projectData.push(req.body);
 
+  // get last element postion of array
+  const lastItem = projectData.length - 1;
+  res.send(`data just added ${projectData[lastItem].temperature} + ${projectData[lastItem].date} + ${projectData[lastItem].userResponse}`);
+})
 
 // Spin up the server
 const server = app.listen(port, () => {
