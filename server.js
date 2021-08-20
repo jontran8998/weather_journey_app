@@ -27,12 +27,15 @@ app.get('/data', (req, res) => {
 
 // Set up POST route
 app.post('/addData', (req, res) => {
-  // add data from request.body to array projectData
-  projectData.push(req.body);
+  console.log(req.body);
+  newEntry = {
+    temperature: req.body.temperature,
+    date: req.body.date,
+    userResponse: req.body.userResponse
+  }
 
-  // get last element postion of array
-  const lastItem = projectData.length - 1;
-  res.send(`data just added ${projectData[lastItem].temperature} + ${projectData[lastItem].date} + ${projectData[lastItem].userResponse}`);
+  projectData.push(newEntry)
+  res.send(projectData)
 })
 
 // Spin up the server

@@ -2,6 +2,7 @@
 /* Global Variables */
 let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
 let apiKey = '&appid=90374c8dbfe1ec518ee2dc519820506f';
+let dataAPI;
 
 
 // Create a new date instance dynamically with JS
@@ -13,7 +14,10 @@ document.getElementById('generate').addEventListener('click', performAction);
 
 function performAction(e) {
   const zipCode = document.getElementById('zip').value;
-  getWeather(baseURL, zipCode, apiKey)
+  const userResponse = document.getElementById('feelings').value;
+  getWeather(baseURL, zipCode, apiKey).then((data) => {
+    postData('/addData', {temperature: data.main.temp, date: newDate, userResponse: userResponse})
+  })
 }
 
 const getWeather = async (baseURL, zipCode, apiKey) => {
@@ -28,25 +32,26 @@ const getWeather = async (baseURL, zipCode, apiKey) => {
   
 }
 
-// // Async POST
-// const postData = async ( url = '', data = {})=>{
+// Async POST
+const postData = async ( url = '', data = {})=>{
 
-//   const response = await fetch(url, {
-//   method: 'POST', 
-//   credentials: 'same-origin', 
-//   headers: {
-//       'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify(data), // body data type must match "Content-Type" header        
-// });
+  const response = await fetch(url, {
+    method: 'POST', 
+    credentials: 'same-origin', 
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data), 
+  });
 
-//   try {
-//     const newData = await response.json();
-//     return newData;
-//   }catch(error) {
-//   console.log("error", error);
-//   }
-// };
+  try {
+    const newData = await response.json();
+    console.log(newData);
+    return newData;
+  }catch(error) {
+    console.log("error", error);
+  }
+};
 
 // // Async GET
 // const retrieveData = async (url='') =>{ 
