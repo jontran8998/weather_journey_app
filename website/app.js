@@ -16,7 +16,8 @@ function performAction(e) {
   const zipCode = document.getElementById('zip').value;
   const userResponse = document.getElementById('feelings').value;
   getWeather(baseURL, zipCode, apiKey).then((data) => {
-    postData('/addData', {temperature: data.main.temp, date: newDate, userResponse: userResponse})
+    postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
+    updateUI()
   })
 }
 
@@ -52,6 +53,20 @@ const postData = async ( url = '', data = {})=>{
     console.log("error", error);
   }
 };
+
+const updateUI = async () => {
+  const request = await fetch('/data')
+  try {
+    const allData = await request.json()
+    console.log(allData);
+    const recentItem = allData.length - 1
+    document.getElementById('date').innerHTML = allData[recentItem].date
+    document.getElementById('temp').innerHTML = allData[recentItem].temperature
+    document.getElementById('content').innerHTML = allData[recentItem].userResponse
+  } catch (e) {
+    console.log("error", e);
+  }
+}
 
 // // Async GET
 // const retrieveData = async (url='') =>{ 
