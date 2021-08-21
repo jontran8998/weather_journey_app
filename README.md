@@ -6,6 +6,7 @@
 * [Project-Rubric](#project-rubric)
 * [Style-Guide](#style-guide)
 * [File-Structure](#file-structure)
+* [Put it to action](#Put-it-to-action)
 
 ## Overview
 
@@ -36,3 +37,7 @@ The project files are structured as follows:
    * [style.css](./website/style.css)
  * [server.js](./server.js)
  * [README.md](./README.md)
+
+## Put-It-To-Action
+npm install
+nodemon .\server.js
