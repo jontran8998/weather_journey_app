@@ -1,26 +1,32 @@
   
 /* Global Variables */
-let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
-let apiKey = '&appid=90374c8dbfe1ec518ee2dc519820506f';
-let dataAPI;
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+const apiKey = '&appid=90374c8dbfe1ec518ee2dc519820506f';
+
 
 
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 
-// add event listener when clicked
+// add event listener when generate button is clicked
 document.getElementById('generate').addEventListener('click', performAction);
 
+// Initilalize perfromAction function
 function performAction(e) {
+  // Get zipcode from user
   const zipCode = document.getElementById('zip').value;
+  // Get user feeling
   const userResponse = document.getElementById('feelings').value;
+  // Get data from weather API and add data to server
   getWeather(baseURL, zipCode, apiKey).then((data) => {
     postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
+    // update UI after getting data
     updateUI()
   })
 }
 
+// Get weather data from web API
 const getWeather = async (baseURL, zipCode, apiKey) => {
   const res = await fetch(baseURL+zipCode+apiKey);
   try {
@@ -54,6 +60,7 @@ const postData = async ( url = '', data = {})=>{
   }
 };
 
+// update UI on client 
 const updateUI = async () => {
   const request = await fetch('/data')
   try {
@@ -67,28 +74,3 @@ const updateUI = async () => {
     console.log("error", e);
   }
 }
-
-// // Async GET
-// const retrieveData = async (url='') =>{ 
-// const request = await fetch(url);
-// try {
-// // Transform into JSON
-// const allData = await request.json()
-// }
-// catch(error) {
-//   console.log("error", error);
-//   // appropriately handle the error
-// }
-// };
-
-// // TODO-Chain your async functions to post an animal then GET the resulting data
-// function postGet(){
-//   postData('/animal', {fav:'lion'})
-//     .then(function(data){
-//       retrieveData('/all')
-//     })
-// }
-
-
-// // TODO-Call the chained function
-// postGet()

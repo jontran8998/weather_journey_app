@@ -17,8 +17,8 @@ app.use(express.static('website'));
 
 const port = 3000;
 
-// create projectData object
-const projectData = [{temperature: 18, date: 'Aug 18', userResponse: "That's great!"}];
+// Initialize projectData object
+const projectData = [];
 
 // Set up GET route
 app.get('/data', (req, res) => {
@@ -27,7 +27,7 @@ app.get('/data', (req, res) => {
 
 // Set up POST route
 app.post('/addData', (req, res) => {
-  console.log(req.body);
+  // add a newEntry object
   newEntry = {
     temperature: req.body.temperature,
     date: req.body.date,
