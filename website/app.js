@@ -1,9 +1,6 @@
-  
 /* Global Variables */
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
 const apiKey = '&appid=90374c8dbfe1ec518ee2dc519820506f';
-
-
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -19,11 +16,16 @@ function performAction(e) {
   // Get user feeling
   const userResponse = document.getElementById('feelings').value;
   // Get data from weather API and add data to server
-  getWeather(baseURL, zipCode, apiKey).then((data) => {
-    postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
-    // update UI after getting data
-    updateUI()
-  })
+  getWeather(baseURL, zipCode, apiKey)
+    .then((data) => {
+      postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
+      // update UI after getting data
+      updateUI()
+    })
+    .catch(e => {
+      console.log("Error", e);
+    })
+  
 }
 
 // Get weather data from web API
@@ -67,9 +69,9 @@ const updateUI = async () => {
     const allData = await request.json()
     console.log(allData);
     const recentItem = allData.length - 1
-    document.getElementById('date').innerHTML = allData[recentItem].date
-    document.getElementById('temp').innerHTML = allData[recentItem].temperature
-    document.getElementById('content').innerHTML = allData[recentItem].userResponse
+    document.getElementById('date').innerHTML = "Date: " + allData[recentItem].date
+    document.getElementById('temp').innerHTML = "Temperature: " + allData[recentItem].temperature + "F"
+    document.getElementById('content').innerHTML = "My feeling: " + allData[recentItem].userResponse
   } catch (e) {
     console.log("error", e);
   }
