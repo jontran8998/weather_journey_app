@@ -39,5 +39,5 @@ The project files are structured as follows:
  * [README.md](./README.md)
 
 ## Put-It-To-Action
-npm install
-nodemon .\server.js
+- npm install
+- nodemon .\server.js
