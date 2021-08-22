@@ -2,15 +2,17 @@
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
 const apiKey = '&appid=90374c8dbfe1ec518ee2dc519820506f';
 
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+
 
 // add event listener when generate button is clicked
 document.getElementById('generate').addEventListener('click', performAction);
 
 // Initilalize perfromAction function
 function performAction(e) {
+  // Create a new date instance dynamically with JS
+  let d = new Date();
+  let month = d.getMonth() + 1
+  let newDate = month + '.' + d.getDate() + '.' + d.getFullYear();
   // Get zipcode from user
   const zipCode = document.getElementById('zip').value;
   // Get user feeling
@@ -18,6 +20,7 @@ function performAction(e) {
   // Get data from weather API and add data to server
   getWeather(baseURL, zipCode, apiKey)
     .then((data) => {
+      console.log(newDate);
       postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
       // update UI after getting data
       updateUI()
@@ -33,7 +36,6 @@ const getWeather = async (baseURL, zipCode, apiKey) => {
   const res = await fetch(baseURL+zipCode+apiKey);
   try {
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (e) {
     console.log("error", e);
@@ -67,7 +69,6 @@ const updateUI = async () => {
   const request = await fetch('/data')
   try {
     const allData = await request.json()
-    console.log(allData);
     const recentItem = allData.length - 1
     document.getElementById('date').innerHTML = "Date: " + allData[recentItem].date
     document.getElementById('temp').innerHTML = "Temperature: " + allData[recentItem].temperature + "F"
