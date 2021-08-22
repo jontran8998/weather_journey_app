@@ -11,8 +11,9 @@ document.getElementById('generate').addEventListener('click', performAction);
 function performAction(e) {
   // Create a new date instance dynamically with JS
   let d = new Date();
-  let month = d.getMonth() + 1
-  let newDate = month + '.' + d.getDate() + '.' + d.getFullYear();
+  // let month = d.getMonth() + 1
+  let month = d.toLocaleString('default', { month: 'long' });
+  let newDate = month + ' ' + d.getDate() + ', ' + d.getFullYear();
   // Get zipcode from user
   const zipCode = document.getElementById('zip').value;
   // Get user feeling
@@ -71,7 +72,7 @@ const updateUI = async () => {
     const allData = await request.json()
     const recentItem = allData.length - 1
     document.getElementById('date').innerHTML = "Date: " + allData[recentItem].date
-    document.getElementById('temp').innerHTML = "Temperature: " + allData[recentItem].temperature + "F"
+    document.getElementById('temp').innerHTML = "Temperature: " + allData[recentItem].temperature + " F"
     document.getElementById('content').innerHTML = "My feeling: " + allData[recentItem].userResponse
   } catch (e) {
     console.log("error", e);
