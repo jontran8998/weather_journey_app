@@ -1,7 +1,5 @@
 /* Global Variables */
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
-const apiKey = '&appid=90374c8dbfe1ec518ee2dc519820506f';
-
 
 
 // add event listener when generate button is clicked
@@ -18,8 +16,10 @@ function performAction(e) {
   const zipCode = document.getElementById('zip').value;
   // Get user feeling
   const userResponse = document.getElementById('feelings').value;
+
   // Get data from weather API and add data to server
-  getWeather(baseURL, zipCode, apiKey)
+  getAPIKEY().then((apiKey) => {
+    getWeather(baseURL, zipCode, apiKey)
     .then((data) => {
       console.log(newDate);
       postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
@@ -29,7 +29,18 @@ function performAction(e) {
     .catch(e => {
       console.log("Error", e);
     })
-  
+  })
+}
+
+// get apiKey function
+const getAPIKEY = async () => {
+  const res = await fetch('/apiKey')
+  try {
+    const api = await res.json();
+    return api.key;
+  } catch (e) {
+    console.log("error", e);
+  }
 }
 
 // Get weather data from web API
@@ -70,10 +81,9 @@ const updateUI = async () => {
   const request = await fetch('/data')
   try {
     const allData = await request.json()
-    const recentItem = allData.length - 1
-    document.getElementById('date').innerHTML = "Date: " + allData[recentItem].date
-    document.getElementById('temp').innerHTML = "Temperature: " + allData[recentItem].temperature + " F"
-    document.getElementById('content').innerHTML = "My feeling: " + allData[recentItem].userResponse
+    document.getElementById('date').innerHTML = "Date: " + allData.date
+    document.getElementById('temp').innerHTML = "Temperature: " + allData.temperature
+    document.getElementById('content').innerHTML = "My feeling: " + allData.userResponse
   } catch (e) {
     console.log("error", e);
   }
