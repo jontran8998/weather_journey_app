@@ -1,0 +1,27 @@
+{
+  "name": "weather_journal-app",
+  "version": "1.0.0",
+  "description": "* [Overview](#overview)\r * [Project-Rubric](#project-rubric)\r * [Style-Guide](#style-guide)\r * [File-Structure](#file-structure)\r * [Put it to action](#Put-it-to-action)",
+  "main": "server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javie1199/weather_journey_app.git"
+  },
+  "author": "Jon Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/javie1199/weather_journey_app/issues"
+  },
+  "homepage": "https://github.com/javie1199/weather_journey_app#readme"
+}
