@@ -21,7 +21,6 @@ function performAction(e) {
   getAPIKEY().then((apiKey) => {
     getWeather(baseURL, zipCode, apiKey)
     .then((data) => {
-      console.log(newDate);
       postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
       // update UI after getting data
       updateUI()
@@ -50,10 +49,17 @@ const getWeather = async (baseURL, zipCode, apiKey) => {
     const data = await res.json();
     return data;
   } catch (e) {
+    alert("Error: Please enter acceptable datas")
     console.log("error", e);
   }
   
 }
+
+// function getWeather(baseURL, zipCode, apiKey) {
+//   axios.get(baseURL + zipCode + apiKey)
+//     .then(res => res)
+//   .catch(err => alert("ERROR :", err)) 
+// }
 
 // Async POST
 const postData = async ( url = '', data = {})=>{
@@ -69,7 +75,6 @@ const postData = async ( url = '', data = {})=>{
 
   try {
     const newData = await response.json();
-    console.log(newData);
     return newData;
   }catch(error) {
     console.log("error", error);
