@@ -1,6 +1,6 @@
 /* Global Variables */
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
-
+const units = "&units=metric"
 
 // add event listener when generate button is clicked
 document.getElementById('generate').addEventListener('click', performAction);
@@ -14,12 +14,15 @@ function performAction(e) {
   let newDate = month + ' ' + d.getDate() + ', ' + d.getFullYear();
   // Get zipcode from user
   const zipCode = document.getElementById('zip').value;
+  if (!validateZipCode(zipCode)) {
+    return alert("PLease add 5 digits of your zip code in US")
+  }
   // Get user feeling
   const userResponse = document.getElementById('feelings').value;
 
   // Get data from weather API and add data to server
   getAPIKEY().then((apiKey) => {
-    getWeather(baseURL, zipCode, apiKey)
+    getWeather(baseURL, zipCode, apiKey, units)
     .then((data) => {
       postData('/addData', { temperature: data.main.temp, date: newDate, userResponse: userResponse })
       // update UI after getting data
@@ -43,8 +46,8 @@ const getAPIKEY = async () => {
 }
 
 // Get weather data from web API
-const getWeather = async (baseURL, zipCode, apiKey) => {
-  const res = await fetch(baseURL+zipCode+apiKey);
+const getWeather = async (baseURL, zipCode, apiKey, units) => {
+  const res = await fetch(baseURL + zipCode + apiKey + units);
   try {
     const data = await res.json();
     return data;
@@ -55,6 +58,11 @@ const getWeather = async (baseURL, zipCode, apiKey) => {
   
 }
 
+// validation zip code
+function validateZipCode(elementValue){
+  var zipCodePattern = /^\d{5}$|^\d{5}-\d{4}$/;
+   return zipCodePattern.test(elementValue);
+}
 // function getWeather(baseURL, zipCode, apiKey) {
 //   axios.get(baseURL + zipCode + apiKey)
 //     .then(res => res)
