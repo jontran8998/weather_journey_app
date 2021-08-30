@@ -31,10 +31,10 @@ See below for the Udacity Style Guide used thoroughout the Front End Nanodegree.
 
 The project files are structured as follows:
 
- * [website](./website)
-   * [app.js](./website/app.js)
-   * [index.html](./website/index.html)
-   * [style.css](./website/style.css)
+ * [dist](./dist)
+   * [app.js](./dist/app.js)
+   * [index.html](./dist/index.html)
+   * [style.css](./dist/style.css)
  * [server.js](./server.js)
  * [README.md](./README.md)
 
